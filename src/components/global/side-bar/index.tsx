@@ -1,5 +1,8 @@
+"use client"
+
 import { useGroupChatOnline } from "@/hooks/groups";
 import { useSidebar } from "@/hooks/navigation";
+import { cn } from "@/lib/utils";
 import React from "react";
 
 type SideBarProps = {
@@ -52,9 +55,18 @@ const SideBar = ({ groupid, userid, mobile }: SideBarProps) => {
   const { groupInfo, groups, mutate, variables, isPending, channels } =
     useSidebar(groupid);
 
-    useGroupChatOnline(userid)
+  useGroupChatOnline(userid);
 
-  return <div>SideBar</div>;
+  return (
+    <div
+      className={cn(
+        "h-screen flex-col gap-y-10 sm:px-5",
+        !mobile ? "hidden bg-black md:w-[300px] fixed md:flex" : "w-full flex"
+      )}
+    >
+        adsfadf
+    </div>
+  );
 };
 
 export default SideBar;
