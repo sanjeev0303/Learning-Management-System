@@ -16,15 +16,15 @@ type PaymentFormProps = {
     stripeId?: string
 }
 
-// const GroupList = dynamic(
-//     () =>
-//       import("@/components/global/group-list-slider").then(
-//         (component) => component.GroupListSlider,
-//       ),
-//     {
-//       ssr: false,
-//     },
-//   )
+const GroupList = dynamic(
+    () =>
+      import("@/components/global/group-list-slider").then(
+        (component) => component.GroupListSlider,
+      ),
+    {
+      ssr: false,
+    },
+  )
 
 // WIP: connet the use Payment hooks
 
@@ -42,12 +42,12 @@ const PaymentForm = ({ userId, affiliate, stripeId }: PaymentFormProps) => {
   return (
     <Loader loading={creatingIntent}>
     <form className="pt-5" onSubmit={onCreateGroup}>
-      {/* <GroupList
+      <GroupList
         selected={isCategory}
         register={register}
         label="Select Category"
         slidesOffsetBefore={28}
-      /> */}
+      />
       <div className="px-7 mb-2">
         <ErrorMessage
           errors={errors}
