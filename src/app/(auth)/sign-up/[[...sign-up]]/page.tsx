@@ -1,5 +1,5 @@
 import SignUpForm from "@/components/forms/sign-up"
-// import { GoogleAuthButton } from "@/components/global/google-oauth-button"
+import { GoogleAuthButton } from "@/components/global/google-oauth-button"
 import { Separator } from "@/components/ui/separator"
 import { SignUp } from "@clerk/nextjs"
 
@@ -21,7 +21,7 @@ const SignUpPage = (props: Props) => {
         </div>
         <Separator orientation="horizontal" className="bg-themeGray" />
       </div>
-      {/* <GoogleAuthButton method="signup" /> */}
+      <GoogleAuthButton method="signup" />
     </>
   )
 }
