@@ -17,60 +17,59 @@ import { Navbar } from "../_components/navbar"
 import MobileNav from "../_components/mobile-nav"
 
 type Props = {
-  children: React.ReactNode
-  params: {
-    groupid: string
+    children: React.ReactNode
+    params: {
+      groupid: string
+    }
   }
-}
 
-const GroupLayout = async ({ children, params }: Props) => {
-  const query = new QueryClient()
+  const GroupLayout = async ({ children, params }: Props) => {
+    // Destructure groupid at the start of the component
+    const { groupid } = params
+    const query = new QueryClient()
+    const user = await onAuthenticatedUser()
 
-  const user = await onAuthenticatedUser()
-  if (!user.id) redirect("/sign-in")
+    if (!user.id) redirect("/sign-in")
 
-  //group info
-  await query.prefetchQuery({
-    queryKey: ["group-info"],
-    queryFn: () => onGetGroupInfo(params.groupid),
-  })
+    //group info
+    await query.prefetchQuery({
+      queryKey: ["group-info"],
+      queryFn: () => onGetGroupInfo(groupid),
+    })
 
-  //user groups
-  await query.prefetchQuery({
-    queryKey: ["user-groups"],
-    queryFn: () => onGetUserGroups(user.id as string),
-  })
+    //user groups
+    await query.prefetchQuery({
+      queryKey: ["user-groups"],
+      queryFn: () => onGetUserGroups(user.id as string),
+    })
 
-  //channels
-  await query.prefetchQuery({
-    queryKey: ["group-channels"],
-    queryFn: () => onGetGroupChannels(params.groupid),
-  })
+    //channels
+    await query.prefetchQuery({
+      queryKey: ["group-channels"],
+      queryFn: () => onGetGroupChannels(groupid),
+    })
 
-  //group subscriptions
-  await query.prefetchQuery({
-    queryKey: ["group-subscriptions"],
-    queryFn: () => onGetGroupSubscriptions(params.groupid),
-  })
+    //group subscriptions
+    await query.prefetchQuery({
+      queryKey: ["group-subscriptions"],
+      queryFn: () => onGetGroupSubscriptions(groupid),
+    })
 
-  //member-chats
-  await query.prefetchQuery({
-    queryKey: ["member-chats"],
-    queryFn: () => onGetAllGroupMembers(params.groupid),
-  })
+    //member-chats
+    await query.prefetchQuery({
+      queryKey: ["member-chats"],
+      queryFn: () => onGetAllGroupMembers(groupid),
+    })
 
-  return (
-    <HydrationBoundary state={dehydrate(query)}>
-      <div className="flex h-screen md:pt-5">
-        <SideBar groupid={params.groupid} userid={user.id} />
-        <div className="md:ml-[300px] flex flex-col flex-1 bg-[#101011] md:rounded-tl-xl overflow-y-auto border-l-[1px] border-t-[1px] border-[#28282D]">
-          <Navbar groupid={params.groupid} userid={user.id} />
-          {children}
-          <MobileNav groupid={params.groupid} />
+    return (
+      <HydrationBoundary state={dehydrate(query)}>
+        <div className="flex h-screen md:pt-5">
+          <SideBar groupid={groupid} userid={user.id} />
+          <div className="md:ml-[300px] flex flex-col flex-1 bg-[#101011] md:rounded-tl-xl overflow-y-auto border-l-[1px] border-t-[1px] border-[#28282D]">
+            {children}
+          </div>
         </div>
-      </div>
-    </HydrationBoundary>
-  )
-}
-
+      </HydrationBoundary>
+    )
+  }
 export default GroupLayout

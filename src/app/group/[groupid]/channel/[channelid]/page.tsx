@@ -1,6 +1,6 @@
 import { onAuthenticatedUser } from "@/actions/auth";
 import { onGetChannelInfo } from "@/actions/channel";
-import { onGetGroupChannels, onGetGroupInfo } from "@/actions/groups";
+import { onGetGroupInfo } from "@/actions/groups";
 import { currentUser } from "@clerk/nextjs/server";
 import { QueryClient } from "@tanstack/react-query";
 import React from "react";
@@ -9,8 +9,6 @@ type GroupChannelProps = {
   params: { channelid: string; groupid: string };
 };
 
-// WIP: complete grouple channel page
-
 const GroupChannelPage = async ({ params }: GroupChannelProps) => {
   const client = new QueryClient();
   const user = await currentUser();
@@ -18,12 +16,18 @@ const GroupChannelPage = async ({ params }: GroupChannelProps) => {
 
   await client.prefetchQuery({
     queryKey: ["channel-info"],
-    queryFn: () => onGetChannelInfo(params.channelid),
+    queryFn: async () => {
+      const data = await onGetChannelInfo(params.channelid);
+      return data ?? null; // Ensure a value is returned
+    },
   });
 
   await client.prefetchQuery({
     queryKey: ["about-group-info"],
-    queryFn: () => onGetGroupInfo(params.groupid),
+    queryFn: async () => {
+      const data = await onGetGroupInfo(params.groupid);
+      return data ?? null; // Ensure a value is returned
+    },
   });
 
   return <div>GroupChannelPage</div>;
