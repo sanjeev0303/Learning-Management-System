@@ -1,4 +1,5 @@
-import { createSlice, PayloadAction } from "@reduxjs/toolkit";
+// slices/online-member-slice.ts
+import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 
 type InitialStateProps = {
   members: {
@@ -11,19 +12,17 @@ const InitialState: InitialStateProps = {
 };
 
 export const OnlineTracking = createSlice({
-  name: "online",
+  name: 'online',
   initialState: InitialState,
   reducers: {
     onOnline: (state, action: PayloadAction<InitialStateProps>) => {
-      //check for duplicates
-      const list = state.members.find((data: any) =>
-        action.payload.members.find((payload: any) => data.id === payload.id)
+      const list = state.members.find((data) =>
+        action.payload.members.find((payload) => data.id === payload.id)
       );
 
       if (!list) state.members = [...state.members, ...action.payload.members];
     },
     onOffline: (state, action: PayloadAction<InitialStateProps>) => {
-      //look for member and remove them
       state.members = state.members.filter((member) =>
         action.payload.members.find((m) => member.id !== m.id)
       );

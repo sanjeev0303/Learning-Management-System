@@ -13,6 +13,7 @@ import {
   dehydrate,
 } from "@tanstack/react-query"
 import { redirect } from "next/navigation"
+import Navbar from "../_components/navbar"
 
 type Props = {
     children: React.ReactNode
@@ -64,6 +65,7 @@ type Props = {
         <div className="flex h-screen md:pt-5">
           <SideBar groupid={groupid} userid={user.id} />
           <div className="md:ml-[300px] flex flex-col flex-1 bg-[#101011] md:rounded-tl-xl overflow-y-auto border-l-[1px] border-t-[1px] border-[#28282D]">
+            <Navbar groupid={groupid} userid={user.id} />
             {children}
           </div>
         </div>

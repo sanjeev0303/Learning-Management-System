@@ -2,11 +2,12 @@
 
 import { combineReducers, configureStore } from "@reduxjs/toolkit"
 import { TypedUseSelectorHook, useSelector } from "react-redux"
+import { OnlineTracking } from "./slices/online-member-slice"
 
 
 const rootReducer = combineReducers({
     // Add your reducers here
-    // onlineTrackingReducer,
+    onlineTracking: OnlineTracking,
 })
 
 
