@@ -7,6 +7,8 @@ import HtmlParser from "../html-parser";
 import { handleCommandNavigation } from "novel/extensions";
 import { cn } from "@/lib/utils";
 import Image from "next/image";
+import { defaultExtensions } from "./extention"
+import { slashCommand } from "./slash-command";
 
 type BlockTextEditorProps = {
   content: JSONContent | undefined;
@@ -83,14 +85,14 @@ const BlockTextEditor = ({
             }}
 
             extensions={[
-                ...defaultExtentions,
+                ...defaultExtensions,
                 slashCommand,
                 CharacterCount.configure({
                     limit: max,
                 }),
                 Placeholder.configure({
                     placeholder:"Type / to insert element..."
-                }), 
+                }),
                 Video,
                 Image
             ]}
