@@ -1,3 +1,4 @@
+import GroupSettingsForm from "@/components/forms/group-settings";
 import React from "react";
 
 const GroupSettingsPage = ({ params }: { params: { groupid: string } }) => {

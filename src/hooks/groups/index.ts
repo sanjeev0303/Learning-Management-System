@@ -1,3 +1,5 @@
+"use client"
+
 import { onGetGroupInfo, onUpDateGroupSettings } from "@/actions/groups";
 import { supabaseClient } from "@/lib/utils";
 import { onOnline } from "@/redux/slices/online-member-slice";
