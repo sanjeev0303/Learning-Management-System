@@ -111,7 +111,7 @@ const GroupSettingsForm = ({ groupId }: GroupSettingsFormProps) => {
             setTextContent={setOnDescription}
           />
         </Label>
-        <Button className="self-start" type="submit">
+        <Button className="self-start mb-2" type="submit">
           <Loader loading={isPending}>Update Settings</Loader>
         </Button>
       </div>
