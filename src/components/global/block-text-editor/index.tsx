@@ -1,16 +1,25 @@
 "use client";
 
-import { EditorContent, EditorRoot, JSONContent } from "novel";
+import {
+    EditorBubble,
+  EditorCommand,
+  EditorCommandEmpty,
+  EditorCommandItem,
+  EditorContent,
+  EditorRoot,
+  JSONContent,
+} from "novel";
 import React, { useState } from "react";
 import { FieldError, FieldErrors } from "react-hook-form";
 import HtmlParser from "../html-parser";
-import { CharacterCount, handleCommandNavigation, Placeholder } from "novel/extensions";
+import { CharacterCount, handleCommandNavigation } from "novel/extensions";
 import { cn } from "@/lib/utils";
-// import Image from "next/image";
-import { defaultExtensions } from "./extention"
-import { slashCommand } from "./slash-command";
+import { defaultExtensions } from "./extention";
+import { slashCommand, suggestionItems } from "./slash-command";
 import { Video } from "./video";
 import { Image } from "./image";
+import Placeholder from "@tiptap/extension-placeholder";
+import NodeSelector from "./node-selector";
 
 type BlockTextEditorProps = {
   content: JSONContent | undefined;
@@ -73,32 +82,66 @@ const BlockTextEditor = ({
               },
             }}
             onUpdate={({ editor }) => {
-                const json = editor.getJSON()
-                const text = editor.getText()
+              const json = editor.getJSON();
+              const text = editor.getText();
 
-                if (setHtmlContent) {
-                    const html = editor.getHTML()
-                    setHtmlContent(html)
-                }
+              if (setHtmlContent) {
+                const html = editor.getHTML();
+                setHtmlContent(html);
+              }
 
-                setContent(json)
-                setTextContent(text)
-                setCharacters(text.length)
+              setContent(json);
+              setTextContent(text);
+              setCharacters(text.length);
             }}
-
             extensions={[
-                ...defaultExtensions,
-                slashCommand,
-                CharacterCount.configure({
-                    limit: max,
-                }),
-                Placeholder.configure({
-                    placeholder:"Type / to insert element..."
-                }),
-                Video,
-                Image,
+              ...defaultExtensions,
+              slashCommand,
+              CharacterCount.configure({
+                limit: max,
+              }),
+              Placeholder.configure({
+                placeholder: "Type / to insert element...",
+              }),
+              Video,
+              Image,
             ]}
-          ></EditorContent>
+          >
+            <EditorCommand className="z-50 h-auto max-h-[330px] w-72 overflow-y-auto rounded-md border-muted bg-background px-1 py-2 shadow-md transition-all">
+              <EditorCommandEmpty className="px-2 text-muted-foreground">
+                No results
+              </EditorCommandEmpty>
+              {suggestionItems.map((item: any) => (
+                <EditorCommandItem
+                  value={item.title}
+                  onCommand={(val) => item.command(val)}
+                  className={`flex w-full items-center space-x-2 rounded-md px-2 py-1 text-left text-sm hover:bg-accent aria-selected:bg-accent `}
+                  key={item.title}
+                >
+                  <div className="flex h-10 w-10 items-center justify-center rounded-md border border-muted bg-background">
+                    {item.icon}
+                  </div>
+                  <div>
+                    <p className="font-medium">{item.title}</p>
+                    <p className="text-xs text-muted-foreground">
+                      {item.description}
+                    </p>
+                  </div>
+                </EditorCommandItem>
+              ))}
+               <EditorBubble
+                tippyOptions={{
+                  placement: "top",
+                }}
+                className="flex w-fit max-w-[90vw] overflow-hidden rounded border border-muted bg-themeBlack text-themeTextGray shadow-xl"
+              >
+                <NodeSelector open={openNode} onOpenChange={setOpenNode} />
+                <LinkSelector open={openLink} onOpenChange={setOpenLink} />
+                <TextButtons />
+                <ColorSelector open={openColor} onOpenChange={setOpenColor} />
+              </EditorBubble>
+            </EditorCommand>
+          </EditorContent>
         </EditorRoot>
       )}
     </div>
