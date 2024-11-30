@@ -1,7 +1,12 @@
-import { JSONContent } from "novel";
+"use client";
+
+import { EditorContent, EditorRoot, JSONContent } from "novel";
 import React, { useState } from "react";
 import { FieldError, FieldErrors } from "react-hook-form";
 import HtmlParser from "../html-parser";
+import { handleCommandNavigation } from "novel/extensions";
+import { cn } from "@/lib/utils";
+import Image from "next/image";
 
 type BlockTextEditorProps = {
   content: JSONContent | undefined;
@@ -46,7 +51,51 @@ const BlockTextEditor = ({
       {htmlContent && !onEdit && inline ? (
         <HtmlParser html={htmlContent} />
       ) : (
-        <></>
+        <EditorRoot>
+          <EditorContent
+            className={cn(
+              inline
+                ? onEdit && "mb-5"
+                : "border-[1px] rounded-xl px-10 py-5 text-base border-themeGray bg-themeBlack w-full"
+            )}
+            initialContent={content}
+            editorProps={{
+              editable: () => !disabled as boolean,
+              handleDOMEvents: {
+                keydown: (_view, event) => handleCommandNavigation(event),
+              },
+              attributes: {
+                class: `prose prose-lg dark:prose-invert focus:outline-none max-w-full [&_h1]:text-4xl [&_h2]:text-3xl [&_h3]:text-2xl text-themeTextGray`,
+              },
+            }}
+            onUpdate={({ editor }) => {
+                const json = editor.getJSON()
+                const text = editor.getText()
+
+                if (setHtmlContent) {
+                    const html = editor.getHTML()
+                    setHtmlContent(html)
+                }
+
+                setContent(json)
+                setTextContent(text)
+                setCharacters(text.length)
+            }}
+
+            extensions={[
+                ...defaultExtentions,
+                slashCommand,
+                CharacterCount.configure({
+                    limit: max,
+                }),
+                Placeholder.configure({
+                    placeholder:"Type / to insert element..."
+                }), 
+                Video,
+                Image
+            ]}
+          ></EditorContent>
+        </EditorRoot>
       )}
     </div>
   );
