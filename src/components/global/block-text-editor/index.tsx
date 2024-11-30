@@ -1,7 +1,7 @@
 "use client";
 
 import {
-    EditorBubble,
+  EditorBubble,
   EditorCommand,
   EditorCommandEmpty,
   EditorCommandItem,
@@ -23,6 +23,7 @@ import NodeSelector from "./node-selector";
 import { LinkSelector } from "./link-selector";
 import { TextButtons } from "./text-button";
 import { ColorSelector } from "./color-selector";
+import { ErrorMessage } from "@hookform/error-message";
 
 type BlockTextEditorProps = {
   content: JSONContent | undefined;
@@ -132,7 +133,7 @@ const BlockTextEditor = ({
                   </div>
                 </EditorCommandItem>
               ))}
-               <EditorBubble
+              <EditorBubble
                 tippyOptions={{
                   placement: "top",
                 }}
@@ -145,6 +146,53 @@ const BlockTextEditor = ({
               </EditorBubble>
             </EditorCommand>
           </EditorContent>
+          {inline ? (
+            onEdit && (
+              <div className="flex justify-between py-2">
+                <p
+                  className={cn(
+                    "text-xs",
+                    characters &&
+                      (characters < min || characters > max) &&
+                      "text-red-500"
+                  )}
+                >
+                  {characters || 0} / {max}
+                </p>
+                <ErrorMessage
+                  errors={errors}
+                  name={name}
+                  render={({ message }) => (
+                    <p className="text-red-400 mt-2">
+                      {message === "Required" ? "" : message}
+                    </p>
+                  )}
+                />
+              </div>
+            )
+          ) : (
+            <div className="flex justify-between py-2">
+              <p
+                className={cn(
+                  "text-xs",
+                  characters &&
+                    (characters < min || characters > max) &&
+                    "text-red-500"
+                )}
+              >
+                {characters || 0} / {max}
+              </p>
+              <ErrorMessage
+                errors={errors}
+                name={name}
+                render={({ message }) => (
+                  <p className="text-red-400 mt-2">
+                    {message === "Required" ? "" : message}
+                  </p>
+                )}
+              />
+            </div>
+          )}
         </EditorRoot>
       )}
     </div>
