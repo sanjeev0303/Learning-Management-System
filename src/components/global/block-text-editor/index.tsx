@@ -22,6 +22,7 @@ import Placeholder from "@tiptap/extension-placeholder";
 import NodeSelector from "./node-selector";
 import { LinkSelector } from "./link-selector";
 import { TextButtons } from "./text-button";
+import { ColorSelector } from "./color-selector";
 
 type BlockTextEditorProps = {
   content: JSONContent | undefined;
