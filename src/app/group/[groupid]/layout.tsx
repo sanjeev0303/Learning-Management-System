@@ -14,6 +14,7 @@ import {
 } from "@tanstack/react-query"
 import { redirect } from "next/navigation"
 import Navbar from "../_components/navbar"
+import MobileNav from "../_components/moblie-nav"
 
 type Props = {
     children: React.ReactNode
@@ -67,6 +68,7 @@ type Props = {
           <div className="md:ml-[300px] flex flex-col flex-1 bg-[#101011] md:rounded-tl-xl overflow-y-auto border-l-[1px] border-t-[1px] border-[#28282D]">
             <Navbar groupid={groupid} userid={user.id} />
             {children}
+            <MobileNav groupid={params.groupid} />
           </div>
         </div>
       </HydrationBoundary>
