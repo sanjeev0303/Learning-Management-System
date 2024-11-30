@@ -6,10 +6,11 @@ import { FieldError, FieldErrors } from "react-hook-form";
 import HtmlParser from "../html-parser";
 import { CharacterCount, handleCommandNavigation, Placeholder } from "novel/extensions";
 import { cn } from "@/lib/utils";
-import Image from "next/image";
+// import Image from "next/image";
 import { defaultExtensions } from "./extention"
 import { slashCommand } from "./slash-command";
-import { Video } from "./vidoe";
+import { Video } from "./video";
+import { Image } from "./image";
 
 type BlockTextEditorProps = {
   content: JSONContent | undefined;
@@ -95,7 +96,7 @@ const BlockTextEditor = ({
                     placeholder:"Type / to insert element..."
                 }),
                 Video,
-                Image
+                Image,
             ]}
           ></EditorContent>
         </EditorRoot>
