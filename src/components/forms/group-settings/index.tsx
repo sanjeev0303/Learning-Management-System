@@ -1,6 +1,7 @@
 "use client"
 
 import GroupCard from '@/app/(discover)/explore/_components/group-card'
+import BlockTextEditor from '@/components/global/block-text-editor'
 import { FormGenerator } from '@/components/global/form-generator'
 import { Loader } from '@/components/global/loader'
 import { Button } from '@/components/ui/button'
@@ -99,7 +100,7 @@ const GroupSettingsForm = ({ groupId }: GroupSettingsFormProps) => {
         />
         <Label className="flex flex-col gap-y-2">
           <p>Group Description</p>
-          {/* <BlockTextEditor
+          <BlockTextEditor
             errors={errors}
             name="jsondescription"
             min={150}
@@ -108,7 +109,7 @@ const GroupSettingsForm = ({ groupId }: GroupSettingsFormProps) => {
             content={onJsonDescription}
             setContent={setJsonDescription}
             setTextContent={setOnDescription}
-          /> */}
+          />
         </Label>
         <Button className="self-start" type="submit">
           <Loader loading={isPending}>Update Settings</Loader>
