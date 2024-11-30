@@ -13,8 +13,6 @@ import {
   dehydrate,
 } from "@tanstack/react-query"
 import { redirect } from "next/navigation"
-import { Navbar } from "../_components/navbar"
-import MobileNav from "../_components/mobile-nav"
 
 type Props = {
     children: React.ReactNode
