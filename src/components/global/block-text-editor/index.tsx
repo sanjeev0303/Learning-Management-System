@@ -20,6 +20,7 @@ import { Video } from "./video";
 import { Image } from "./image";
 import Placeholder from "@tiptap/extension-placeholder";
 import NodeSelector from "./node-selector";
+import { LinkSelector } from "./link-selector";
 
 type BlockTextEditorProps = {
   content: JSONContent | undefined;
