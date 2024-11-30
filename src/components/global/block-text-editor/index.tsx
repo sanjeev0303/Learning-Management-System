@@ -4,11 +4,12 @@ import { EditorContent, EditorRoot, JSONContent } from "novel";
 import React, { useState } from "react";
 import { FieldError, FieldErrors } from "react-hook-form";
 import HtmlParser from "../html-parser";
-import { handleCommandNavigation } from "novel/extensions";
+import { CharacterCount, handleCommandNavigation, Placeholder } from "novel/extensions";
 import { cn } from "@/lib/utils";
 import Image from "next/image";
 import { defaultExtensions } from "./extention"
 import { slashCommand } from "./slash-command";
+import { Video } from "./vidoe";
 
 type BlockTextEditorProps = {
   content: JSONContent | undefined;
