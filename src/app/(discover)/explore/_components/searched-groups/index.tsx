@@ -3,6 +3,7 @@ import { Loader } from "@/components/global/loader"
 import { GroupStateProps } from "@/redux/slices/search-slice"
 import GroupCard from "../group-card"
 import NoResult from "./no-reslut"
+import InfiniteScrollObserver from "@/components/global/infinite-scroll-observer"
 
 type Props = {
   searching: boolean

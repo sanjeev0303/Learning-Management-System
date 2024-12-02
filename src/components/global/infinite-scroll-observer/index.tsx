@@ -3,6 +3,7 @@
 import { useInfiniteScroll } from "@/hooks/infinite-scroll"
 import Skeleton from "../skeleton"
 
+
 type Props = {
   action: "GROUPS" | "POSTS"
   children: React.ReactNode
