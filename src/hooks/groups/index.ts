@@ -1,6 +1,6 @@
 "use client"
 
-import { onGetGroupInfo, onUpDateGroupSettings } from "@/actions/groups";
+import { onGetExploreGroup, onGetGroupInfo, onUpDateGroupSettings } from "@/actions/groups";
 import { supabaseClient } from "@/lib/utils";
 import { onOnline } from "@/redux/slices/online-member-slice";
 import { AppDispatch } from "@/redux/store";
@@ -15,7 +15,7 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { z } from "zod";
 import { GroupSettingsSchema } from "@/components/forms/group-settings/schema";
 import { upload } from "@/lib/uploadcare";
-import { onClearList } from "@/redux/slices/infinite-scroll-slice";
+import { onClearList, onInfiniteScroll } from "@/redux/slices/infinite-scroll-slice";
 import { GroupStateProps } from "@/redux/slices/search-slice";
 
 export const useGroupChatOnline = (userid: string) => {
@@ -238,4 +238,29 @@ export const useGroupList = (query: string) => {
     }
 
     return { groups, status }
+  }
+
+
+
+  export const useExploreSlider = (query: string, paginate: number) => {
+    const [onLoadSlider, setOnLoadSlider] = useState<boolean>(false)
+    const dispatch: AppDispatch = useDispatch()
+    const { data, refetch, isFetching, isFetched } = useQuery({
+      queryKey: ["fetch-group-slides"],
+      queryFn: () => onGetExploreGroup(query, paginate | 0),
+      enabled: false,
+    })
+
+    if (isFetched && data?.status === 200 && data.groups) {
+      dispatch(onInfiniteScroll({ data: data.groups }))
+    }
+
+    useEffect(() => {
+      setOnLoadSlider(true)
+      return () => {
+        onLoadSlider
+      }
+    }, [])
+
+    return { refetch, isFetching, data, onLoadSlider }
   }
