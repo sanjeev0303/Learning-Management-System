@@ -1,9 +1,8 @@
 "use client"
 import { useAppSelector } from "@/redux/store"
 import dynamic from "next/dynamic"
-// import ExploreSlider from "./explore-slider"
-// import GroupList from "./group-list"
 import { SearchGroups } from "../searched-groups"
+import GroupList from "../group-list"
 
 type Props = {
   layout: "SLIDER" | "LIST"

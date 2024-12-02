@@ -5,7 +5,7 @@ import { supabaseClient } from "@/lib/utils";
 import { onOnline } from "@/redux/slices/online-member-slice";
 import { AppDispatch } from "@/redux/store";
 import { useMutation, useQuery } from "@tanstack/react-query";
-import { useEffect, useState } from "react";
+import { useEffect, useLayoutEffect, useState } from "react";
 import { useDispatch } from "react-redux";
 import { JSONContent } from "novel";
 import { useRouter } from "next/navigation";
@@ -15,6 +15,8 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { z } from "zod";
 import { GroupSettingsSchema } from "@/components/forms/group-settings/schema";
 import { upload } from "@/lib/uploadcare";
+import { onClearList } from "@/redux/slices/infinite-scroll-slice";
+import { GroupStateProps } from "@/redux/slices/search-slice";
 
 export const useGroupChatOnline = (userid: string) => {
   const dispatch: AppDispatch = useDispatch();
@@ -217,3 +219,23 @@ export const useGroupSettings = (groupid: string) => {
     onDescription,
   };
 };
+
+
+export const useGroupList = (query: string) => {
+    const { data } = useQuery({
+      queryKey: [query],
+    })
+
+    const dispatch: AppDispatch = useDispatch()
+
+    useLayoutEffect(() => {
+      dispatch(onClearList({ data: [] }))
+    }, [])
+
+    const { groups, status } = data as {
+      groups: GroupStateProps[]
+      status: number
+    }
+
+    return { groups, status }
+  }
