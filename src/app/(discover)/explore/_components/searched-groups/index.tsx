@@ -4,6 +4,7 @@ import { GroupStateProps } from "@/redux/slices/search-slice"
 import GroupCard from "../group-card"
 import NoResult from "./no-reslut"
 import InfiniteScrollObserver from "@/components/global/infinite-scroll-observer"
+import PaginatedGroups from "../paginated-groups"
 
 type Props = {
   searching: boolean
