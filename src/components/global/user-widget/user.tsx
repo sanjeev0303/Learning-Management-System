@@ -28,7 +28,7 @@ const UserAvatar = ({ image, groupid, userid }: UserAvatarProps) => {
 
     const dispatch: AppDispatch = useDispatch()
 
-    console.log("user-widget: ", userid);
+    // console.log("user-widget: ", userid);
 
     const onLogout = async () => {
         untrackPresence()
