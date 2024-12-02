@@ -1,6 +1,6 @@
 // import Navbar from '@/app/group/_components/navbar'
 import React from 'react'
-import { Navbar } from './_components/navbar'
+import { Navbar } from './explore/_components/navbar'
 
 type DiscoverLayoutProps = {
     children: React.ReactNode
