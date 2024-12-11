@@ -1,8 +1,11 @@
 "use client";
 
 import {
+    onGetAllGroupMembers,
+  onGetAllUserMessages,
   onGetExploreGroup,
   onGetGroupInfo,
+  onUpdateGroupGallery,
   onUpDateGroupSettings,
 } from "@/actions/groups";
 import { supabaseClient, validateURLString } from "@/lib/utils";
@@ -12,7 +15,7 @@ import { useMutation, useQuery } from "@tanstack/react-query";
 import { useEffect, useLayoutEffect, useRef, useState } from "react";
 import { useDispatch } from "react-redux";
 import { JSONContent } from "novel";
-import { useRouter } from "next/navigation";
+import { usePathname, useRouter } from "next/navigation";
 import { toast } from "sonner";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
@@ -27,6 +30,7 @@ import { GroupStateProps } from "@/redux/slices/search-slice";
 import { Group } from "lucide-react";
 import { onUpdateChannelInfo } from "@/actions/channel";
 import { types } from "util";
+import { UpdateGallerySchema } from "@/components/forms/media-gallery/schema";
 
 export const useGroupChatOnline = (userid: string) => {
   const dispatch: AppDispatch = useDispatch();
@@ -450,3 +454,198 @@ export const useGroupAbout = (
       isPending,
     }
   }
+
+
+  export const useMediaGallery = (groupid: string) => {
+    const {
+      register,
+      formState: { errors },
+      handleSubmit,
+    } = useForm<z.infer<typeof UpdateGallerySchema>>({
+      resolver: zodResolver(UpdateGallerySchema),
+    })
+
+    const { mutate, isPending } = useMutation({
+      mutationKey: ["update-gallery"],
+      mutationFn: async (values: z.infer<typeof UpdateGallerySchema>) => {
+        if (values.videourl) {
+          const update = await onUpdateGroupGallery(groupid, values.videourl)
+          if (update && update.status !== 200) {
+            return toast("Error", {
+              description: update?.message,
+            })
+          }
+        }
+        if (values.image && values.image.length) {
+          let count = 0
+          while (count < values.image.length) {
+            const uploaded = await upload.uploadFile(values.image[count])
+            if (uploaded) {
+              const update = await onUpdateGroupGallery(groupid, uploaded.uuid)
+              if (update?.status !== 200) {
+                toast("Error", {
+                  description: update?.message,
+                })
+                break
+              }
+            } else {
+              toast("Error", {
+                description: "Looks like something went wrong!",
+              })
+              break
+            }
+            console.log("increment")
+            count++
+          }
+        }
+
+        return toast("Success", {
+          description: "Group gallery updated",
+        })
+      },
+    })
+
+    const onUpdateGallery = handleSubmit(async (values) => mutate(values))
+
+    return {
+      register,
+      errors,
+      onUpdateGallery,
+      isPending,
+    }
+  }
+
+//   export const useGroupChat = (groupid: string) => {
+//     const { data } = useQuery({
+//       queryKey: ["member-chats"],
+//       queryFn: () => onGetAllGroupMembers(groupid),
+//     })
+
+//     const pathname = usePathname()
+
+//     return { data, pathname }
+//   }
+
+//   export const useChatWindow = (recieverid: string) => {
+//     const { data, isFetched } = useQuery({
+//       queryKey: ["user-messages"],
+//       queryFn: () => onGetAllUserMessages(recieverid),
+//     })
+
+//     const messageWindowRef = useRef<HTMLDivElement | null>(null)
+
+//     const onScrollToBottom = () => {
+//       messageWindowRef.current?.scroll({
+//         top: messageWindowRef.current.scrollHeight,
+//         left: 0,
+//         behavior: "smooth",
+//       })
+//     }
+
+//     useEffect(() => {
+//       supabaseClient
+//         .channel("table-db-changes")
+//         .on(
+//           "postgres_changes",
+//           {
+//             event: "*",
+//             schema: "public",
+//             table: "Message",
+//           },
+//           async (payload) => {
+//             dispatch(
+//               onChat({
+//                 chat: [
+//                   ...(payload.new as {
+//                     id: string
+//                     message: string
+//                     createdAt: Date
+//                     senderid: string | null
+//                     recieverId: string | null
+//                   }[]),
+//                 ],
+//               }),
+//             )
+//           },
+//         )
+//         .subscribe()
+//     }, [])
+
+//     useEffect(() => {
+//       onScrollToBottom()
+//     }, [messageWindowRef])
+
+//     const dispatch: AppDispatch = useDispatch()
+
+//     if (isFetched && data?.messages) dispatch(onChat({ chat: data.messages }))
+
+//     return { messageWindowRef }
+//   }
+
+//   export const useSendMessage = (recieverId: string) => {
+//     const { register, reset, handleSubmit } = useForm<
+//       z.infer<typeof SendNewMessageSchema>
+//     >({
+//       resolver: zodResolver(SendNewMessageSchema),
+//     })
+
+//     const { mutate } = useMutation({
+//       mutationKey: ["send-new-message"],
+//       mutationFn: (data: { messageid: string; message: string }) =>
+//         onSendMessage(recieverId, data.messageid, data.message),
+//       onMutate: () => reset(),
+//       onSuccess: () => {
+//         return
+//       },
+//     })
+
+//     const onSendNewMessage = handleSubmit(async (values) =>
+//       mutate({ messageid: v4(), message: values.message }),
+//     )
+
+//     return { onSendNewMessage, register }
+//   }
+
+//   export const useCustomDomain = (groupid: string) => {
+//     const {
+//       handleSubmit,
+//       register,
+//       formState: { errors },
+//       reset,
+//     } = useForm<z.infer<typeof AddCustomDomainSchema>>({
+//       resolver: zodResolver(AddCustomDomainSchema),
+//     })
+
+//     const client = useQueryClient()
+
+//     const { data } = useQuery({
+//       queryKey: ["domain-config"],
+//       queryFn: () => onGetDomainConfig(groupid),
+//     })
+
+//     const { mutate, isPending } = useMutation({
+//       mutationFn: (data: { domain: string }) =>
+//         onAddCustomDomain(groupid, data.domain),
+//       onMutate: reset,
+//       onSuccess: (data) => {
+//         return toast(data.status === 200 ? "Success" : "Error", {
+//           description: data.message,
+//         })
+//       },
+//       onSettled: async () => {
+//         return await client.invalidateQueries({
+//           queryKey: ["domain-config"],
+//         })
+//       },
+//     })
+
+//     const onAddDomain = handleSubmit(async (values) => mutate(values))
+
+//     return {
+//       onAddDomain,
+//       isPending,
+//       register,
+//       errors,
+//       data,
+//     }
+//   }

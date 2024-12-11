@@ -1,6 +1,6 @@
-// import MediaGalleryForm from "@/components/forms/media-gallery"
-// import { GlassModal } from "@/components/global/glass-modal"
-import GlassModal from "@/components/global/glass-modal"
+
+import MediaGalleryForm from "@/components/forms/media-gallery"
+import { GlassModal }from "@/components/global/glass-modal"
 import { Card, CardContent } from "@/components/ui/card"
 import { BadgePlus } from "@/icons"
 import { validateURLString } from "@/lib/utils"
@@ -9,7 +9,7 @@ type MediaGalleryProps = {
   gallery: string[]
   groupid: string
   onActive(media: { url: string | undefined; type: string }): void
-  userid: string
+  userid: string | undefined
   groupUserid: string
 }
 
