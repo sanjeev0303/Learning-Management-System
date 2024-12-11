@@ -1,3 +1,4 @@
+import { useGroupAbout, useGroupInfo } from '@/hooks/groups'
 import React from 'react'
 
 type AboutGroupProps = {
@@ -8,6 +9,8 @@ type AboutGroupProps = {
 const AboutGroup = ({userid, groupid}: AboutGroupProps) => {
 
     const { group } = useGroupInfo()
+
+    const {} = useGroupAbout()
 
   return (
     <div>AboutGroup</div>
