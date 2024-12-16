@@ -1,7 +1,7 @@
 import { onAuthenticatedUser } from "@/actions/auth"
 import { onGetChannelInfo } from "@/actions/channel"
 import { onGetGroupInfo } from "@/actions/groups"
-import Menu from "@/app/(landing)/_components/navbar/menu"
+// import Menu from "@/app/(landing)/_components/navbar/menu"
 import { LeaderBoardCard } from "@/app/group/_components/leaderboard"
 import GroupSideWidget from "@/components/global/group-side-widget"
 import { currentUser } from "@clerk/nextjs/server"
@@ -11,6 +11,7 @@ import {
   dehydrate,
 } from "@tanstack/react-query"
 import CreateNewPost from "./_components/create-new-post"
+import Menu from "../../_components/group-navbar"
 
 
 

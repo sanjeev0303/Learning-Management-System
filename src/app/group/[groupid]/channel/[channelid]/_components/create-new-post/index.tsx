@@ -4,6 +4,7 @@
 // import { SimpleModal } from "@/components/global/simple-modal"
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar"
 import { Card, CardContent, CardDescription } from "@/components/ui/card"
+import { useChannelPage } from "@/hooks/channels";
 // import { useChannelPage } from "@/hooks/channels"
 // import { PostCard } from "../post-feed/post-card"
 
@@ -15,7 +16,7 @@ const CreateNewPost = ({ channelid, userImage, username }: Props) => {
 
   return (
     <>
-      <SimpleModal
+      {/* <SimpleModal
         trigger={
           <span>
             <Card className="border-themeGray cursor-pointer first-letter:rounded-2xl overflow-hidden">
@@ -63,7 +64,7 @@ const CreateNewPost = ({ channelid, userImage, username }: Props) => {
             postid={mutation[0].state.postid}
             optimisitc
           />
-        )}
+        )} */}
     </>
   )
 }
