@@ -1,5 +1,6 @@
 "use client"
 
+import { PostContent } from "@/components/global/post-content";
 import { SimpleModal } from "@/components/global/simple-model";
 // import { PostContent } from "@/components/global/post-content"
 // import { SimpleModal } from "@/components/global/simple-modal"
@@ -49,7 +50,7 @@ const CreateNewPost = ({ channelid, userImage, username }: Props) => {
             </p>
           </div>
         </div>
-        <PostContent channelid={channelid} />
+        {/* <PostContent channelid={channelid} /> */}
       </SimpleModal>
       {mutation.length > 0 &&
         mutation[0].status === "pending" &&

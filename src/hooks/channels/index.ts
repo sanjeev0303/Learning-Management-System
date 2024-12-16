@@ -1,4 +1,4 @@
-import { onDeleteChannel, onGetChannelInfo, onUpdateChannelInfo } from "@/actions/channel";
+import { onCreateChannelPost, onDeleteChannel, onGetChannelInfo, onUpdateChannelInfo } from "@/actions/channel";
 import { CreateChannelPost } from "@/components/global/post-content/schema";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useMutation, useMutationState, useQuery, useQueryClient } from "@tanstack/react-query";
