@@ -2,6 +2,7 @@ import { onAuthenticatedUser } from "@/actions/auth"
 import { onGetChannelInfo } from "@/actions/channel"
 import { onGetGroupInfo } from "@/actions/groups"
 import Menu from "@/app/(landing)/_components/navbar/menu"
+import { LeaderBoardCard } from "@/app/group/_components/leaderboard"
 import GroupSideWidget from "@/components/global/group-side-widget"
 import { currentUser } from "@clerk/nextjs/server"
 import {
@@ -9,6 +10,7 @@ import {
   QueryClient,
   dehydrate,
 } from "@tanstack/react-query"
+import CreateNewPost from "./_components/create-new-post"
 
 
 
@@ -35,15 +37,15 @@ const GroupChannelPage = async ({ params }: Props) => {
     <HydrationBoundary state={dehydrate(client)}>
       <div className="grid lg:grid-cols-4 grid-cols-1 w-full flex-1 h-0 gap-x-5 px-5 s">
         <div className="col-span-1 lg:inline relative hidden py-5">
-          {/* <LeaderBoardCard light /> */}
+          <LeaderBoardCard light />
         </div>
         <div className="lg:col-span-2 flex flex-col gap-y-5 py-5">
           <Menu orientation="desktop" />
-          {/* <CreateNewPost
+          <CreateNewPost
             userImage={user?.imageUrl!}
             channelid={params.channelid}
             username={user?.firstName!}
-          /> */}
+          />
 
           {/* <PostFeed channelid={params.channelid} userid={authUser.id!} /> */}
         </div>
