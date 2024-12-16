@@ -1,11 +1,9 @@
 "use client"
 
 import { useChannelPage } from "@/hooks/channels"
-
-// import InfiniteScrollObserver from "@/components/global/infinite-scroll"
-// import { PaginatedPosts } from "../paginates-posts"
 import { PostCard } from "./post-card"
 import InfiniteScrollObserver from "@/components/global/infinite-scroll-observer"
+import { PaginatedPosts } from "../paginates-posts"
 
 type PostFeedProps = {
   channelid: string
