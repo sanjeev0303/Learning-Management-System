@@ -12,6 +12,7 @@ import {
 } from "@tanstack/react-query"
 import CreateNewPost from "./_components/create-new-post"
 import Menu from "../../_components/group-navbar"
+import { PostFeed } from "./_components/post-feed"
 
 
 
@@ -48,7 +49,7 @@ const GroupChannelPage = async ({ params }: Props) => {
             username={user?.firstName!}
           />
 
-          {/* <PostFeed channelid={params.channelid} userid={authUser.id!} /> */}
+          <PostFeed channelid={params.channelid} userid={authUser.id!} />
         </div>
         <div className="col-span-1 hidden lg:inline relative py-5">
           <GroupSideWidget light />

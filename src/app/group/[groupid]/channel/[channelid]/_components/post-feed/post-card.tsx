@@ -3,8 +3,9 @@ import { Separator } from "@/components/ui/separator"
 import Link from "next/link"
 import { usePathname } from "next/navigation"
 import { PostAuthor } from "./post-author"
-import { Interactions } from "./interactions"
+// import { Interactions } from "./interactions"
 import HtmlParser from "@/components/global/html-parser"
+import { Interactions } from "./interactions"
 
 type PostCardProps = {
   userimage?: string

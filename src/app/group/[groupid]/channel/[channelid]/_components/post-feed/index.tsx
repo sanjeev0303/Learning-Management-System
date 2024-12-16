@@ -2,8 +2,8 @@
 
 import { useChannelPage } from "@/hooks/channels"
 
-import InfiniteScrollObserver from "@/components/global/infinite-scroll"
-import { PaginatedPosts } from "../paginates-posts"
+// import InfiniteScrollObserver from "@/components/global/infinite-scroll"
+// import { PaginatedPosts } from "../paginates-posts"
 import { PostCard } from "./post-card"
 
 type PostFeedProps = {
@@ -60,14 +60,14 @@ export const PostFeed = ({ channelid, userid }: PostFeedProps) => {
           likeid={post.likes.length > 0 ? post.likes[0].id : undefined}
         />
       ))}
-      <InfiniteScrollObserver
+      {/* <InfiniteScrollObserver
         action="POSTS"
         loading="POST"
         identifier={channelid}
         paginate={posts.length}
       >
         <PaginatedPosts userid={userid} />
-      </InfiniteScrollObserver>
+      </InfiniteScrollObserver> */}
     </>
   ) : (
     <></>
