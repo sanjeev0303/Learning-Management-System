@@ -1,20 +1,24 @@
 "use client"
 
-import { PostContent } from "@/components/global/post-content";
-import { SimpleModal } from "@/components/global/simple-model";
-// import { PostContent } from "@/components/global/post-content"
+import { PostContent } from "@/components/global/post-content"
+import { SimpleModal } from "@/components/global/simple-model"
 // import { SimpleModal } from "@/components/global/simple-modal"
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar"
 import { Card, CardContent, CardDescription } from "@/components/ui/card"
-import { useChannelPage } from "@/hooks/channels";
-// import { useChannelPage } from "@/hooks/channels"
+import { useChannelPage } from "@/hooks/channels"
 // import { PostCard } from "../post-feed/post-card"
 
 type Props = { userImage: string; channelid: string; username: string }
 
 const CreateNewPost = ({ channelid, userImage, username }: Props) => {
   const { data, mutation } = useChannelPage(channelid)
-  const { name } = data as { name: string }
+
+  console.log(data);
+
+
+  // Check if data is not null before destructuring
+  const name = data ? data.name : "General";
+
 
   return (
     <>
