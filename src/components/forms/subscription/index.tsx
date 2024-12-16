@@ -1,4 +1,4 @@
-"use client"
+"use client" 
 
 import { SubscriptionCard } from "@/app/group/[groupid]/settings/subscriptions/_components/card"
 import { FormGenerator } from "@/components/global/form-generator"
