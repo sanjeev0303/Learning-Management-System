@@ -16,7 +16,7 @@ const CreateNewPost = ({ channelid, userImage, username }: Props) => {
 
   return (
     <>
-      {/* <SimpleModal
+      <SimpleModal
         trigger={
           <span>
             <Card className="border-themeGray cursor-pointer first-letter:rounded-2xl overflow-hidden">
@@ -64,7 +64,7 @@ const CreateNewPost = ({ channelid, userImage, username }: Props) => {
             postid={mutation[0].state.postid}
             optimisitc
           />
-        )} */}
+        )}
     </>
   )
 }
