@@ -2,12 +2,10 @@
 
 import { PostContent } from "@/components/global/post-content"
 import { SimpleModal } from "@/components/global/simple-model"
-// import { SimpleModal } from "@/components/global/simple-modal"
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar"
 import { Card, CardContent, CardDescription } from "@/components/ui/card"
 import { useChannelPage } from "@/hooks/channels"
 import { PostCard } from "../post-feed/post-card"
-// import { PostCard } from "../post-feed/post-card"
 
 type Props = { userImage: string; channelid: string; username: string }
 
