@@ -1,5 +1,6 @@
 "use client"
 
+import { SimpleModal } from "@/components/global/simple-model";
 // import { PostContent } from "@/components/global/post-content"
 // import { SimpleModal } from "@/components/global/simple-modal"
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar"
