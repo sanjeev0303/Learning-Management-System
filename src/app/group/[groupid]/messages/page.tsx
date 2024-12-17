@@ -1,30 +1,13 @@
-// import GlassSheet from "@/components/global/glass-sheet"
-import { Menu } from "lucide-react"
-import { GroupChatMenu } from "./_components/chat-menu"
-import { GlassSheet } from "@/components/global/glass-sheet"
 
-type HuddlesLayoutProps = {
-  children: React.ReactNode
-  params: { groupid: string }
-}
+import { Empty } from "@/icons"
 
-const HuddlesLayout = async ({ children, params }: HuddlesLayoutProps) => {
+const GroupMessagesPage = async () => {
   return (
-    <div className="grid grid-cols-1 lg:grid-cols-6 flex-1 h-0">
-      <div className="lg:col-span-4 flex flex-col">
-        <div className="flex justify-between items-center p-5 lg:hidden">
-          <p className="font-medium text-themeTextWhite">No chat selected</p>
-          <GlassSheet trigger={<Menu />}>
-            <GroupChatMenu groupid={params.groupid} />
-          </GlassSheet>
-        </div>
-        {children}
-      </div>
-      <div className="hidden lg:inline lg:col-span-2 bg-themeBlack rounded-tl-3xl overflow-auto">
-        <GroupChatMenu groupid={params.groupid} />
-      </div>
+    <div className="flex flex-col justify-center items-center flex-1 gap-y-3">
+      <Empty />
+      <p className="text-themeTextGray">No chat selected</p>
     </div>
   )
 }
 
-export default HuddlesLayout
+export default GroupMessagesPage
