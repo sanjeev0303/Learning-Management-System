@@ -126,38 +126,38 @@ import { CreateCourseSchema } from "@/components/global/create-course/schema"
 
 
 
-//   export const useCreateModule = (courseId: string, groupid: string) => {
-//     const client = useQueryClient()
+  export const useCreateModule = (courseId: string, groupid: string) => {
+    const client = useQueryClient()
 
-//     const { data } = useQuery({
-//       queryKey: ["group-info"],
-//       queryFn: () => onGetGroupInfo(groupid),
-//     })
+    const { data } = useQuery({
+      queryKey: ["group-info"],
+      queryFn: () => onGetGroupInfo(groupid),
+    })
 
-//     const { mutate, variables, isPending } = useMutation({
-//       mutationKey: ["create-module"],
-//       mutationFn: (data: { courseId: string; title: string; moduleId: string }) =>
-//         onCreateCourseModule(data.courseId, data.title, data.moduleId),
-//       onSuccess: (data) => {
-//         toast(data.status === 200 ? "Success" : "Error", {
-//           description: data.message,
-//         })
-//       },
-//       onSettled: async () => {
-//         return await client.invalidateQueries({
-//           queryKey: ["course-modules"],
-//         })
-//       },
-//     })
-//     const onCreateModule = () =>
-//       mutate({
-//         courseId,
-//         title: "New Module",
-//         moduleId: v4(),
-//       })
+    const { mutate, variables, isPending } = useMutation({
+      mutationKey: ["create-module"],
+      mutationFn: (data: { courseId: string; title: string; moduleId: string }) =>
+        onCreateCourseModule(data.courseId, data.title, data.moduleId),
+      onSuccess: (data) => {
+        toast(data.status === 200 ? "Success" : "Error", {
+          description: data.message,
+        })
+      },
+      onSettled: async () => {
+        return await client.invalidateQueries({
+          queryKey: ["course-modules"],
+        })
+      },
+    })
+    const onCreateModule = () =>
+      mutate({
+        courseId,
+        title: "New Module",
+        moduleId: v4(),
+      })
 
-//     return { variables, isPending, onCreateModule, data }
-//   }
+    return { variables, isPending, onCreateModule, data }
+  }
 
 
 
