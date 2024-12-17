@@ -4,6 +4,7 @@ import {
   HydrationBoundary,
   QueryClient,
 } from "@tanstack/react-query"
+import { CreateCourseModule } from "../_components/create-module"
 // import { CreateCourseModule } from "../_components/create-module"
 // import CourseModuleList from "../_components/module-list"
 
@@ -27,11 +28,11 @@ const CourseLayout = async ({ params, children }: CourseLayoutProps) => {
     <HydrationBoundary state={dehydrate(client)}>
       <div className="grid grid-cols-1 h-full lg:grid-cols-4 overflow-hidden">
         <div className="bg-themeBlack p-5 overflow-y-auto">
-          {/* <CreateCourseModule
+          <CreateCourseModule
             courseId={params.courseid}
             groupid={params.groupid}
           />
-          <CourseModuleList
+          {/* <CourseModuleList
             groupid={params.groupid}
             courseId={params.courseid}
           /> */}
