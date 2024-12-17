@@ -1,19 +1,19 @@
-"use client"
-import { GlobalAccordion } from "@/components/global/accordion"
-import { IconRenderer } from "@/components/global/icon-renderer"
-import { AccordionContent } from "@/components/ui/accordion"
-import { Button } from "@/components/ui/button"
-import { Input } from "@/components/ui/input"
-import { useCourseModule } from "@/hooks/courses"
-import { EmptyCircle, PurpleCheck } from "@/icons"
-import { Plus } from "lucide-react"
-import Link from "next/link"
-import { v4 } from "uuid"
+"use client";
+import { GlobalAccordion } from "@/components/global/accordion";
+import { IconRenderer } from "@/components/global/icon-renderer";
+import { AccordionContent } from "@/components/ui/accordion";
+import { Button } from "@/components/ui/button";
+import { Input } from "@/components/ui/input";
+import { useCourseModule } from "@/hooks/courses";
+import { EmptyCircle, PurpleCheck } from "@/icons";
+import { Plus } from "lucide-react";
+import Link from "next/link";
+import { v4 } from "uuid";
 
 type Props = {
-  courseId: string
-  groupid: string
-}
+  courseId: string;
+  groupid: string;
+};
 
 const CourseModuleList = ({ courseId, groupid }: Props) => {
   const {
@@ -37,7 +37,7 @@ const CourseModuleList = ({ courseId, groupid }: Props) => {
     sectionInputRef,
     sectionUpdatePending,
     updateVariables,
-  } = useCourseModule(courseId, groupid)
+  } = useCourseModule(courseId, groupid);
 
   return (
     <div className="flex flex-col">
@@ -132,7 +132,7 @@ const CourseModuleList = ({ courseId, groupid }: Props) => {
           </GlobalAccordion>
         ))}
     </div>
-  )
-}
+  );
+};
 
-export default CourseModuleList
+export default CourseModuleList;

@@ -1,29 +1,27 @@
-import { onGetCourseModules } from "@/actions/course"
+import { onGetCourseModules } from "@/actions/course";
 import {
   dehydrate,
   HydrationBoundary,
   QueryClient,
-} from "@tanstack/react-query"
-import { CreateCourseModule } from "../_components/create-module"
-import CourseModuleList from "../_components/module-list"
-// import { CreateCourseModule } from "../_components/create-module"
-// import CourseModuleList from "../_components/module-list"
+} from "@tanstack/react-query";
+import { CreateCourseModule } from "../_components/create-module";
+import CourseModuleList from "../_components/module-list";
 
 type CourseLayoutProps = {
   params: {
-    courseid: string
-    groupid: string
-  }
-  children: React.ReactNode
-}
+    courseid: string;
+    groupid: string;
+  };
+  children: React.ReactNode;
+};
 
 const CourseLayout = async ({ params, children }: CourseLayoutProps) => {
-  const client = new QueryClient()
+  const client = new QueryClient();
 
   await client.prefetchQuery({
     queryKey: ["course-modules"],
     queryFn: () => onGetCourseModules(params.courseid),
-  })
+  });
 
   return (
     <HydrationBoundary state={dehydrate(client)}>
@@ -43,7 +41,7 @@ const CourseLayout = async ({ params, children }: CourseLayoutProps) => {
         </div>
       </div>
     </HydrationBoundary>
-  )
-}
+  );
+};
 
-export default CourseLayout
+export default CourseLayout;
