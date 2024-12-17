@@ -325,30 +325,30 @@ import { CreateCourseSchema } from "@/components/global/create-course/schema"
 
 
 
-//   export const useSectionNavBar = (sectionid: string) => {
-//     const { data } = useQuery({
-//       queryKey: ["section-info"],
-//       queryFn: () => onGetSectionInfo(sectionid),
-//     })
+  export const useSectionNavBar = (sectionid: string) => {
+    const { data } = useQuery({
+      queryKey: ["section-info"],
+      queryFn: () => onGetSectionInfo(sectionid),
+    })
 
-//     const client = useQueryClient()
+    const client = useQueryClient()
 
-//     const { isPending, mutate } = useMutation({
-//       mutationFn: () => onUpdateSection(sectionid, "COMPLETE", ""),
-//       onSuccess: (data) => {
-//         toast(data.status === 200 ? "Success" : "Error", {
-//           description: data.message,
-//         })
-//       },
-//       onSettled: async () => {
-//         return await client.invalidateQueries({
-//           queryKey: ["course-modules"],
-//         })
-//       },
-//     })
+    const { isPending, mutate } = useMutation({
+      mutationFn: () => onUpdateSection(sectionid, "COMPLETE", ""),
+      onSuccess: (data) => {
+        toast(data.status === 200 ? "Success" : "Error", {
+          description: data.message,
+        })
+      },
+      onSettled: async () => {
+        return await client.invalidateQueries({
+          queryKey: ["course-modules"],
+        })
+      },
+    })
 
-//     return { data, mutate, isPending }
-//   }
+    return { data, mutate, isPending }
+  }
 
 
 //   export const useCourseSectionInfo = (sectionId: string) => {
