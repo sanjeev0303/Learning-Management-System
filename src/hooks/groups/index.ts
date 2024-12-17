@@ -515,16 +515,16 @@ export const useGroupAbout = (
     }
   }
 
-//   export const useGroupChat = (groupid: string) => {
-//     const { data } = useQuery({
-//       queryKey: ["member-chats"],
-//       queryFn: () => onGetAllGroupMembers(groupid),
-//     })
+  export const useGroupChat = (groupid: string) => {
+    const { data } = useQuery({
+      queryKey: ["member-chats"],
+      queryFn: () => onGetAllGroupMembers(groupid),
+    })
 
-//     const pathname = usePathname()
+    const pathname = usePathname()
 
-//     return { data, pathname }
-//   }
+    return { data, pathname }
+  }
 
 //   export const useChatWindow = (recieverid: string) => {
 //     const { data, isFetched } = useQuery({
