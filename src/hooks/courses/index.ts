@@ -351,13 +351,13 @@ import { CreateCourseSchema } from "@/components/global/create-course/schema"
   }
 
 
-//   export const useCourseSectionInfo = (sectionId: string) => {
-//     const { data } = useQuery({
-//       queryKey: ["section-info"],
-//       queryFn: () => onGetSectionInfo(sectionId),
-//     })
-//     return { data }
-//   }
+  export const useCourseSectionInfo = (sectionId: string) => {
+    const { data } = useQuery({
+      queryKey: ["section-info"],
+      queryFn: () => onGetSectionInfo(sectionId),
+    })
+    return { data }
+  }
 
 //   export const useCourseContent = (
 //     sectionId: string,

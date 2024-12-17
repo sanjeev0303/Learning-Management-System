@@ -16,6 +16,7 @@ const CourseModuleSection = async ({ params }: Props) => {
       sectionid={params.sectionid}
       userid={user.id!}
     />
+    
   )
 }
 
