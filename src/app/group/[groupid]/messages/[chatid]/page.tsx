@@ -1,6 +1,5 @@
 import { onAuthenticatedUser } from "@/actions/auth"
 import { onGetAllUserMessages, onGetUserFromMembership } from "@/actions/groups"
-// import { HuddlesForm } from "@/components/forms/huddles"
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar"
 import {
   HydrationBoundary,
@@ -9,7 +8,7 @@ import {
 } from "@tanstack/react-query"
 import { User } from "lucide-react"
 import { ChatWindow } from "../_components/chat"
-// import { ChatWindow } from "../_components/chat"
+import { HuddlesForm } from "@/components/forms/huddles"
 
 const MemberChatPage = async ({ params }: { params: { chatid: string } }) => {
   const query = new QueryClient()
