@@ -5,6 +5,7 @@ import {
   QueryClient,
 } from "@tanstack/react-query"
 import { CreateCourseModule } from "../_components/create-module"
+import CourseModuleList from "../_components/module-list"
 // import { CreateCourseModule } from "../_components/create-module"
 // import CourseModuleList from "../_components/module-list"
 
@@ -32,10 +33,10 @@ const CourseLayout = async ({ params, children }: CourseLayoutProps) => {
             courseId={params.courseid}
             groupid={params.groupid}
           />
-          {/* <CourseModuleList
+          <CourseModuleList
             groupid={params.groupid}
             courseId={params.courseid}
-          /> */}
+          />
         </div>
         <div className="lg:col-span-3 max-h-full h-full pb-10 overflow-y-auto bg-[#101011]/90">
           {children}
