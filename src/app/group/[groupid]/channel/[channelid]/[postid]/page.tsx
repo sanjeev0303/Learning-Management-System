@@ -8,8 +8,8 @@ import {
   QueryClient,
   dehydrate,
 } from "@tanstack/react-query"
-import { PostComments } from "./_components/comments"
 import { PostInfo } from "./_components/post-info"
+import { PostComments } from "./_components/comments"
 
 const PostPage = async ({ params }: { params: { postid: string } }) => {
   const client = new QueryClient()
