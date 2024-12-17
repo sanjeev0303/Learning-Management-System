@@ -1,9 +1,10 @@
-import { onGetStripeIntegration } from "@/actions/payments"
+
 import { Card, CardContent, CardDescription } from "@/components/ui/card"
 import { INTEGRATION_LIST_ITEMS } from "@/constants/menus"
 
 import Image from "next/image"
 import IntegrationTrigger from "./_components/integrations-trigger"
+import { onGetStripeIntegration } from "@/actions/payment"
 
 const IntegrationsPage = async ({
   params,
@@ -12,7 +13,7 @@ const IntegrationsPage = async ({
 }) => {
   const payment = await onGetStripeIntegration()
   const connections = {
-    stripe: payment ? true : false,
+    stripe: payment? true : false,
   }
   return (
     <div className="flex-1 h-0 grid grid-cols-1 p-5 content-start lg:grid-cols-3 xl:grid-cols-4 gap-3">
