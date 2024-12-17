@@ -3,6 +3,7 @@ import BlockTextEditor from "@/components/global/block-text-editor"
 import HtmlParser from "@/components/global/html-parser"
 import { Loader } from "@/components/global/loader"
 import { Button } from "@/components/ui/button"
+import { useCourseContent, useCourseSectionInfo } from "@/hooks/courses"
 
 type CourseContentFormProps = {
   sectionid: string
