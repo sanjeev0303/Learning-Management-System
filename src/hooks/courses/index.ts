@@ -115,14 +115,14 @@ import { CreateCourseSchema } from "@/components/global/create-course/schema"
     }
   }
 
-//   export const useCourses = (groupid: string) => {
-//     const { data } = useQuery({
-//       queryKey: ["group-courses"],
-//       queryFn: () => onGetGroupCourses(groupid),
-//     })
+  export const useCourses = (groupid: string) => {
+    const { data } = useQuery({
+      queryKey: ["group-courses"],
+      queryFn: () => onGetGroupCourses(groupid),
+    })
 
-//     return { data }
-//   }
+    return { data }
+  }
 
 
 
