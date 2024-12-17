@@ -1,8 +1,10 @@
 "use client";
 
 import {
+    onAddCustomDomain,
     onGetAllGroupMembers,
   onGetAllUserMessages,
+  onGetDomainConfig,
   onGetExploreGroup,
   onGetGroupInfo,
   onSendMessage,
@@ -12,7 +14,7 @@ import {
 import { supabaseClient, validateURLString } from "@/lib/utils";
 import { onOnline } from "@/redux/slices/online-member-slice";
 import { AppDispatch } from "@/redux/store";
-import { useMutation, useQuery } from "@tanstack/react-query";
+import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { useEffect, useLayoutEffect, useRef, useState } from "react";
 import { useDispatch } from "react-redux";
 import { JSONContent } from "novel";
@@ -35,6 +37,7 @@ import { UpdateGallerySchema } from "@/components/forms/media-gallery/schema";
 import { onChat } from "@/redux/slices/chats-slices";
 import { SendNewMessageSchema } from "@/components/forms/huddles/schema";
 import { v4 } from "uuid";
+import { AddCustomDomainSchema } from "@/components/forms/domain/schema";
 
 export const useGroupChatOnline = (userid: string) => {
   const dispatch: AppDispatch = useDispatch();
@@ -616,47 +619,47 @@ export const useGroupAbout = (
   }
 
 
-  
-//   export const useCustomDomain = (groupid: string) => {
-//     const {
-//       handleSubmit,
-//       register,
-//       formState: { errors },
-//       reset,
-//     } = useForm<z.infer<typeof AddCustomDomainSchema>>({
-//       resolver: zodResolver(AddCustomDomainSchema),
-//     })
 
-//     const client = useQueryClient()
+  export const useCustomDomain = (groupid: string) => {
+    const {
+      handleSubmit,
+      register,
+      formState: { errors },
+      reset,
+    } = useForm<z.infer<typeof AddCustomDomainSchema>>({
+      resolver: zodResolver(AddCustomDomainSchema),
+    })
 
-//     const { data } = useQuery({
-//       queryKey: ["domain-config"],
-//       queryFn: () => onGetDomainConfig(groupid),
-//     })
+    const client = useQueryClient()
 
-//     const { mutate, isPending } = useMutation({
-//       mutationFn: (data: { domain: string }) =>
-//         onAddCustomDomain(groupid, data.domain),
-//       onMutate: reset,
-//       onSuccess: (data) => {
-//         return toast(data.status === 200 ? "Success" : "Error", {
-//           description: data.message,
-//         })
-//       },
-//       onSettled: async () => {
-//         return await client.invalidateQueries({
-//           queryKey: ["domain-config"],
-//         })
-//       },
-//     })
+    const { data } = useQuery({
+      queryKey: ["domain-config"],
+      queryFn: () => onGetDomainConfig(groupid),
+    })
 
-//     const onAddDomain = handleSubmit(async (values) => mutate(values))
+    const { mutate, isPending } = useMutation({
+      mutationFn: (data: { domain: string }) =>
+        onAddCustomDomain(groupid, data.domain),
+      onMutate: reset,
+      onSuccess: (data) => {
+        return toast(data.status === 200 ? "Success" : "Error", {
+          description: data.message,
+        })
+      },
+      onSettled: async () => {
+        return await client.invalidateQueries({
+          queryKey: ["domain-config"],
+        })
+      },
+    })
 
-//     return {
-//       onAddDomain,
-//       isPending,
-//       register,
-//       errors,
-//       data,
-//     }
-//   }
+    const onAddDomain = handleSubmit(async (values) => mutate(values))
+
+    return {
+      onAddDomain,
+      isPending,
+      register,
+      errors,
+      data,
+    }
+  }

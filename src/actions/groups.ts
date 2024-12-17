@@ -6,6 +6,7 @@ import { v4 as uuidv4} from "uuid"
 import { z } from "zod"
 import { onAuthenticatedUser } from "./auth";
 import { revalidatePath } from "next/cache";
+import axios from "axios";
 
 export const onGetAffiliateInfo = async (id: string) => {
   try {
@@ -737,80 +738,80 @@ export const onCreateNewGroup = async (
     }
   }
 
-//   export const onGetDomainConfig = async (groupId: string) => {
-//     try {
-//       //check if domain exists
-//       const domain = await client.group.findUnique({
-//         where: {
-//           id: groupId,
-//         },
-//         select: {
-//           domain: true,
-//         },
-//       })
+  export const onGetDomainConfig = async (groupId: string) => {
+    try {
+      //check if domain exists
+      const domain = await client.group.findUnique({
+        where: {
+          id: groupId,
+        },
+        select: {
+          domain: true,
+        },
+      })
 
-//       if (domain && domain.domain) {
-//         //get config status of domain
-//         const status = await axios.get(
-//           `https://api.vercel.com/v10/domains/${domain.domain}/config?teamId=${process.env.TEAM_ID_VERCEL}`,
-//           {
-//             headers: {
-//               Authorization: `Bearer ${process.env.AUTH_BEARER_TOKEN}`,
-//               "Content-Type": "application/json",
-//             },
-//           },
-//         )
+      if (domain && domain.domain) {
+        //get config status of domain
+        const status = await axios.get(
+          `https://api.vercel.com/v10/domains/${domain.domain}/config?teamId=${process.env.TEAM_ID_VERCEL}`,
+          {
+            headers: {
+              Authorization: `Bearer ${process.env.AUTH_BEARER_TOKEN}`,
+              "Content-Type": "application/json",
+            },
+          },
+        )
 
-//         return { status: status.data, domain: domain.domain }
-//       }
+        return { status: status.data, domain: domain.domain }
+      }
 
-//       return { status: 404 }
-//     } catch (error) {
-//       console.log(error)
-//       return { status: 400 }
-//     }
-//   }
+      return { status: 404 }
+    } catch (error) {
+      console.log(error)
+      return { status: 400 }
+    }
+  }
 
 
-//   export const onAddCustomDomain = async (groupid: string, domain: string) => {
-//     try {
-//         const addDomainHttpUrl = `https://api.vercel.com/v10/projects/${process.env.PROJECT_ID_VERCEL}/domains?teamId=${process.env.TEAM_ID_VERCEL}`
-//         //we now insert domain into our vercel project
-//         //we make an http request to vercel
-//         const response = await axios.post(
-//             addDomainHttpUrl,
-//             {
-//                 name: domain,
-//             },
-//             {
-//                 headers: {
-//                     Authorization: `Bearer ${process.env.AUTH_BEARER_TOKEN}`,
-//                     "Content-Type": "application/json",
-//                 },
-//             },
-//         )
+  export const onAddCustomDomain = async (groupid: string, domain: string) => {
+    try {
+        const addDomainHttpUrl = `https://api.vercel.com/v10/projects/${process.env.PROJECT_ID_VERCEL}/domains?teamId=${process.env.TEAM_ID_VERCEL}`
+        //we now insert domain into our vercel project
+        //we make an http request to vercel
+        const response = await axios.post(
+            addDomainHttpUrl,
+            {
+                name: domain,
+            },
+            {
+                headers: {
+                    Authorization: `Bearer ${process.env.AUTH_BEARER_TOKEN}`,
+                    "Content-Type": "application/json",
+                },
+            },
+        )
 
-//         if (response) {
-//             const newDomain = await client.group.update({
-//                 where: {
-//                     id: groupid,
-//                 },
-//                 data: {
-//                     domain,
-//                 },
-//             })
+        if (response) {
+            const newDomain = await client.group.update({
+                where: {
+                    id: groupid,
+                },
+                data: {
+                    domain,
+                },
+            })
 
-//             if (newDomain) {
-//                 return {
-//                     status: 200,
-//                     message: "Domain successfully added",
-//                 }
-//             }
-//         }
+            if (newDomain) {
+                return {
+                    status: 200,
+                    message: "Domain successfully added",
+                }
+            }
+        }
 
-//         return { status: 404, message: "Group not found" }
-//     } catch (error) {
-//         console.log(error)
-//         return { status: 400, message: "Oops something went wrong" }
-//     }
-//   }
+        return { status: 404, message: "Group not found" }
+    } catch (error) {
+        console.log(error)
+        return { status: 400, message: "Oops something went wrong" }
+    }
+  }
