@@ -3,7 +3,7 @@ import { Card, CardContent, CardDescription } from "@/components/ui/card"
 import { INTEGRATION_LIST_ITEMS } from "@/constants/menus"
 
 import Image from "next/image"
-import IntegrationTrigger from "./_components/integration-trigger"
+import IntegrationTrigger from "./_components/integrations-trigger"
 
 const IntegrationsPage = async ({
   params,
