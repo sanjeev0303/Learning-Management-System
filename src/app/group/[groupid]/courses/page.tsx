@@ -2,6 +2,7 @@ import { onGetGroupCourses } from '@/actions/course'
 import CourseCreate from '@/components/global/create-course'
 import { dehydrate, HydrationBoundary, QueryClient } from '@tanstack/react-query'
 import React from 'react'
+import CourseList from './_components/course-list'
 
 type CoursePageProps = {
     params: {
