@@ -5,6 +5,7 @@ import {
   onGetAllUserMessages,
   onGetExploreGroup,
   onGetGroupInfo,
+  onSendMessage,
   onUpdateGroupGallery,
   onUpDateGroupSettings,
 } from "@/actions/groups";
@@ -32,6 +33,8 @@ import { onUpdateChannelInfo } from "@/actions/channel";
 import { types } from "util";
 import { UpdateGallerySchema } from "@/components/forms/media-gallery/schema";
 import { onChat } from "@/redux/slices/chats-slices";
+import { SendNewMessageSchema } from "@/components/forms/huddles/schema";
+import { v4 } from "uuid";
 
 export const useGroupChatOnline = (userid: string) => {
   const dispatch: AppDispatch = useDispatch();
@@ -588,30 +591,32 @@ export const useGroupAbout = (
   }
 
 
-//   export const useSendMessage = (recieverId: string) => {
-//     const { register, reset, handleSubmit } = useForm<
-//       z.infer<typeof SendNewMessageSchema>
-//     >({
-//       resolver: zodResolver(SendNewMessageSchema),
-//     })
+  export const useSendMessage = (recieverId: string) => {
+    const { register, reset, handleSubmit } = useForm<
+      z.infer<typeof SendNewMessageSchema>
+    >({
+      resolver: zodResolver(SendNewMessageSchema),
+    })
 
-//     const { mutate } = useMutation({
-//       mutationKey: ["send-new-message"],
-//       mutationFn: (data: { messageid: string; message: string }) =>
-//         onSendMessage(recieverId, data.messageid, data.message),
-//       onMutate: () => reset(),
-//       onSuccess: () => {
-//         return
-//       },
-//     })
+    const { mutate } = useMutation({
+      mutationKey: ["send-new-message"],
+      mutationFn: (data: { messageid: string; message: string }) =>
+        onSendMessage(recieverId, data.messageid, data.message),
+      onMutate: () => reset(),
+      onSuccess: () => {
+        return
+      },
+    })
 
-//     const onSendNewMessage = handleSubmit(async (values) =>
-//       mutate({ messageid: v4(), message: values.message }),
-//     )
+    const onSendNewMessage = handleSubmit(async (values) =>
+      mutate({ messageid: v4(), message: values.message }),
+    )
 
-//     return { onSendNewMessage, register }
-//   }
+    return { onSendNewMessage, register }
+  }
 
+
+  
 //   export const useCustomDomain = (groupid: string) => {
 //     const {
 //       handleSubmit,
