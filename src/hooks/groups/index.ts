@@ -31,6 +31,7 @@ import { Group } from "lucide-react";
 import { onUpdateChannelInfo } from "@/actions/channel";
 import { types } from "util";
 import { UpdateGallerySchema } from "@/components/forms/media-gallery/schema";
+import { onChat } from "@/redux/slices/chats-slices";
 
 export const useGroupChatOnline = (userid: string) => {
   const dispatch: AppDispatch = useDispatch();
@@ -515,6 +516,8 @@ export const useGroupAbout = (
     }
   }
 
+
+
   export const useGroupChat = (groupid: string) => {
     const { data } = useQuery({
       queryKey: ["member-chats"],
@@ -526,61 +529,64 @@ export const useGroupAbout = (
     return { data, pathname }
   }
 
-//   export const useChatWindow = (recieverid: string) => {
-//     const { data, isFetched } = useQuery({
-//       queryKey: ["user-messages"],
-//       queryFn: () => onGetAllUserMessages(recieverid),
-//     })
 
-//     const messageWindowRef = useRef<HTMLDivElement | null>(null)
 
-//     const onScrollToBottom = () => {
-//       messageWindowRef.current?.scroll({
-//         top: messageWindowRef.current.scrollHeight,
-//         left: 0,
-//         behavior: "smooth",
-//       })
-//     }
+  export const useChatWindow = (recieverid: string) => {
+    const { data, isFetched } = useQuery({
+      queryKey: ["user-messages"],
+      queryFn: () => onGetAllUserMessages(recieverid),
+    })
 
-//     useEffect(() => {
-//       supabaseClient
-//         .channel("table-db-changes")
-//         .on(
-//           "postgres_changes",
-//           {
-//             event: "*",
-//             schema: "public",
-//             table: "Message",
-//           },
-//           async (payload) => {
-//             dispatch(
-//               onChat({
-//                 chat: [
-//                   ...(payload.new as {
-//                     id: string
-//                     message: string
-//                     createdAt: Date
-//                     senderid: string | null
-//                     recieverId: string | null
-//                   }[]),
-//                 ],
-//               }),
-//             )
-//           },
-//         )
-//         .subscribe()
-//     }, [])
+    const messageWindowRef = useRef<HTMLDivElement | null>(null)
 
-//     useEffect(() => {
-//       onScrollToBottom()
-//     }, [messageWindowRef])
+    const onScrollToBottom = () => {
+      messageWindowRef.current?.scroll({
+        top: messageWindowRef.current.scrollHeight,
+        left: 0,
+        behavior: "smooth",
+      })
+    }
 
-//     const dispatch: AppDispatch = useDispatch()
+    useEffect(() => {
+      supabaseClient
+        .channel("table-db-changes")
+        .on(
+          "postgres_changes",
+          {
+            event: "*",
+            schema: "public",
+            table: "Message",
+          },
+          async (payload) => {
+            dispatch(
+              onChat({
+                chat: [
+                  ...(payload.new as {
+                    id: string
+                    message: string
+                    createdAt: Date
+                    senderid: string | null
+                    recieverId: string | null
+                  }[]),
+                ],
+              }),
+            )
+          },
+        )
+        .subscribe()
+    }, [])
 
-//     if (isFetched && data?.messages) dispatch(onChat({ chat: data.messages }))
+    useEffect(() => {
+      onScrollToBottom()
+    }, [messageWindowRef])
 
-//     return { messageWindowRef }
-//   }
+    const dispatch: AppDispatch = useDispatch()
+
+    if (isFetched && data?.messages) dispatch(onChat({ chat: data.messages }))
+
+    return { messageWindowRef }
+  }
+
 
 //   export const useSendMessage = (recieverId: string) => {
 //     const { register, reset, handleSubmit } = useForm<

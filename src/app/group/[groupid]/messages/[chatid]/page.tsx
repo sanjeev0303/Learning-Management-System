@@ -8,6 +8,7 @@ import {
   dehydrate,
 } from "@tanstack/react-query"
 import { User } from "lucide-react"
+import { ChatWindow } from "../_components/chat"
 // import { ChatWindow } from "../_components/chat"
 
 const MemberChatPage = async ({ params }: { params: { chatid: string } }) => {
